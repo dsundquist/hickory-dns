@@ -127,11 +127,7 @@ impl DnsRequestSender for HttpsClientStream {
             Err(err) => return NetError::from(err).into(),
         };
 
-        let send_fut = send(
-            self.h2.clone(),
-            Bytes::from(bytes),
-            self.context.clone(),
-        );
+        let send_fut = send(self.h2.clone(), Bytes::from(bytes), self.context.clone());
 
         if let Some(request_timeout) = self.request_timeout {
             Box::pin(async move {
